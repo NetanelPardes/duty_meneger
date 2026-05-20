@@ -39,7 +39,7 @@ def get_user_choice() -> str:
     הפרדת קבלת קלט מהמשתמש מהלוגיקה של עיבוד הבחירה.
     מאפשר להחליף את שיטת הקלט בעתיד (למשל, GUI).
     """
-    pass
+    return input("Choose an option: ").strip()
 
 
 def handle_add_soldier() -> None:
