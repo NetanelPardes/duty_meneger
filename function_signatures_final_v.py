@@ -55,7 +55,16 @@ def handle_add_soldier() -> None:
     main.py אחראי על אינטראקציה עם המשתמש,
     soldier_manager.py אחראי על הלוגיקה.
     """
-    pass
+    try:
+        soldier_id = int(input("Enter soldier id: "))
+        name = input("Enter soldier name: ")
+
+        add_soldier(soldier_id, name)
+
+        print("Soldier added successfully.")
+
+    except ValueError as error:
+        print(f"Error: {error}")
 
 
 def handle_remove_soldier() -> None:
@@ -170,7 +179,17 @@ def add_soldier(soldier_id: int, name: str) -> None:
     לא מטפלת בקלט/פלט - רק בלוגיקה.
     זורקת exceptions במקרה של שגיאה במקום להחזיר False.
     """
-    pass
+    if find_soldier_by_id(soldier_id) is not None:
+        raise ValueError(f"Soldier with id {soldier_id} already exists.")
+
+    if not is_valid_name(name):
+        raise ValueError("Soldier name cannot be empty.")
+
+    soldier = {
+        "id": soldier_id,
+        "name": name.strip(),
+        "duties": []
+    }
 
 
 def remove_soldier(soldier_id: int) -> None:
@@ -325,7 +344,11 @@ def find_soldier_by_id(soldier_id: int) -> dict | None:
     יש פונקציה אחת שעושה את זה.
     מחזירה None במקום לזרוק exception - מאפשרת גמישות.
     """
-    pass
+    for soldier in soldiers:
+        if soldier["id"] == soldier_id:
+            return soldier
+
+    return None
 
 
 def find_duty_by_name(duties: list, duty_name: str) -> dict | None:
@@ -396,7 +419,7 @@ def is_valid_name(name: str) -> bool:
     בעתיד אפשר להוסיף בדיקות נוספות (אורך מינימלי, תווים חוקיים).
     פונקציות validation מחזירות bool ולא זורקות exceptions.
     """
-    pass
+    return bool(name and name.strip())
 
 
 def soldier_has_duty(soldier: dict, duty_name: str) -> bool:
