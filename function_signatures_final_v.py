@@ -18,7 +18,14 @@ def show_menu() -> None:
     הפרדה בין הצגת התפריט לבין הלוגיקה העסקית.
     אם נרצה לשנות את התצוגה, נשנה רק כאן.
     """
-    pass
+    print("\n=== Soldier Duty Management System ===")
+    print("1. Add soldier")
+    print("2. Remove soldier")
+    print("3. View all soldiers")
+    print("4. Add duty to soldier")
+    print("5. Update duty status")
+    print("6. View soldier duties")
+    print("0. Exit")
 
 
 def get_user_choice() -> str:
