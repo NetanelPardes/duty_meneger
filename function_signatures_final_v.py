@@ -2,6 +2,11 @@
 מערכת ניהול תורנויות חיילים
 """
 
+soldiers = []
+
+VALID_DAYS = ["sunday", "monday", "tuesday", "wednesday", "thursday"]
+VALID_STATUSES = ["pending", "completed", "missed"]
+
 # ============================================================================
 # main.py
 # אחריות: תפריט ראשי, קלט מהמשתמש, ניתוב לפונקציות
@@ -190,6 +195,8 @@ def add_soldier(soldier_id: int, name: str) -> None:
         "name": name.strip(),
         "duties": []
     }
+
+    soldiers.append(soldier)
 
 
 def remove_soldier(soldier_id: int) -> None:
