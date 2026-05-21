@@ -108,7 +108,14 @@ def handle_view_soldiers() -> None:
     למה הפונקציה קיימת:
     הפרדה בין קבלת הנתונים לבין הצגתם.
     """
-    pass
+    soldiers = get_all_soldiers()
+
+    if not soldiers:
+        print("There are no soldiers in the system.")
+        return
+
+    for soldier in soldiers:
+        print(soldier)
 
 
 def handle_add_duty() -> None:
@@ -122,7 +129,18 @@ def handle_add_duty() -> None:
     למה הפונקציה קיימת:
     הפרדה בין UI לבין לוגיקה עסקית.
     """
-    pass
+    try:
+        soldier_id = int(input("Enter soldier ID: ").strip())
+        duty_name = input("Enter duty name: ").strip()
+        day = input("Enter day (sunday-thursday): ").strip().lower()
+
+        add_duty_to_soldier(soldier_id, duty_name, day)
+        print("Duty added successfully.")
+
+    except ValueError as error:
+        print(f"Error: {error}")
+    except KeyError as error:
+        print(f"Error: {error}")
 
 
 def handle_update_duty_status() -> None:
@@ -256,7 +274,7 @@ def get_all_soldiers() -> list:
     גישה לנתונים בצורה מבוקרת.
     מאפשר לקבל את הנתונים מבלי לגשת ישירות למשתנה הגלובלי.
     """
-    pass
+    return soldiers.copy()
 
 
 # ============================================================================
@@ -288,7 +306,27 @@ def add_duty_to_soldier(soldier_id: int, duty_name: str, day: str) -> None:
     מבצעת בדיקות ומוסיפה תורנות לחייל.
     זורקת exceptions במקרה של שגיאה במקום להחזיר False.
     """
-    pass
+    soldier = find_soldier_by_id(soldier_id)
+
+    if soldier is None:
+        raise KeyError("soldier was not found")
+    
+    if not is_valid_name(duty_name):
+        raise ValueError("duty name cannot be empty")
+
+    if soldier_has_duty(soldier, duty_name):
+        raise ValueError("this duty already exists for this soldier")
+
+    if not is_valid_day(day):
+        raise ValueError("day must be sunday, monday, tuesday, wednesday, or thursday")
+
+    duty = {
+        "name": duty_name.strip(),
+        "day": day.strip().lower(),
+        "status": "pending",
+    }
+
+    soldier["duties"].append(duty)
 
 
 def update_duty_status(soldier_id: int, duty_name: str, new_status: str) -> None:
@@ -466,7 +504,7 @@ def soldier_has_duty(soldier: dict, duty_name: str) -> bool:
     הפרדה של הלוגיקה למקום אחד.
     פונקציות validation מחזירות bool ולא זורקות exceptions.
     """
-    pass
+    return find_duty_by_name(soldier["duties"], duty_name) is not None
 
 
 def is_valid_day(day: str) -> bool:
@@ -490,7 +528,7 @@ def is_valid_day(day: str) -> bool:
     בעתיד אפשר לשנות את הימים החוקיים במקום אחד.
     פונקציות validation מחזירות bool ולא זורקות exceptions.
     """
-    pass
+    return day.strip().lower() in VALID_DAYS
 
 
 # ============================================================================
