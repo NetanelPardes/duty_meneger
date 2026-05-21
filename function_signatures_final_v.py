@@ -179,7 +179,22 @@ def handle_view_soldier_duties() -> None:
     למה הפונקציה קיימת:
     הפרדה בין UI לבין לוגיקה עסקית.
     """
-    pass
+    try:
+        soldier_id = int(input("Enter soldier ID: ").strip())
+        duties = get_soldier_duties(soldier_id)
+
+        if not duties:
+            print("This soldier has no duties.")
+            return
+
+        print("\n=== Soldier Duties ===")
+        for duty in duties:
+            print(f"Duty: {duty['name']} | Day: {duty['day']} | Status: {duty['status']}")
+
+    except ValueError:
+        print("Error: soldier ID must be a number.")
+    except KeyError as error:
+        print(f"Error: {error}")
 
 
 def main() -> None:
@@ -401,7 +416,12 @@ def get_soldier_duties(soldier_id: int) -> list:
     מפרידה בין הנתונים לבין הגישה אליהם.
     זורקת exception אם החייל לא קיים (במקום להחזיר רשימה ריקה).
     """
-    pass
+    soldier = find_soldier_by_id(soldier_id)
+
+    if soldier is None:
+        raise KeyError("soldier was not found")
+
+    return soldier["duties"].copy()
 
 
 # ============================================================================
