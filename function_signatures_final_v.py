@@ -83,7 +83,18 @@ def handle_remove_soldier() -> None:
     למה הפונקציה קיימת:
     הפרדה בין UI לבין לוגיקה עסקית.
     """
-    pass
+    try:
+        soldier_id = int(input("Enter soldier id to remove: "))
+
+        remove_soldier(soldier_id)
+
+        print("Soldier removed successfully.")
+
+    except ValueError:
+        print("Error: Soldier id must be a number.")
+
+    except KeyError as error:
+        print(f"Error: {error}")
 
 
 def handle_view_soldiers() -> None:
@@ -219,7 +230,12 @@ def remove_soldier(soldier_id: int) -> None:
     מבצעת בדיקת קיום ומסירה מהנתונים.
     זורקת exception במקרה שהחייל לא קיים.
     """
-    pass
+    soldier = find_soldier_by_id(soldier_id)
+
+    if soldier is None:
+        raise KeyError(f"Soldier with id {soldier_id} was not found.")
+
+    soldiers.remove(soldier)
 
 
 def get_all_soldiers() -> list:
