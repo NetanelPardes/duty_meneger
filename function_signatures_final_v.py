@@ -154,7 +154,18 @@ def handle_update_duty_status() -> None:
     למה הפונקציה קיימת:
     הפרדה בין UI לבין לוגיקה עסקית.
     """
-    pass
+    try:
+        soldier_id = int(input("Enter soldier ID: ").strip())
+        duty_name = input("Enter duty name: ").strip()
+        new_status = input("Enter new status (pending/completed/missed): ").strip().lower()
+
+        update_duty_status(soldier_id, duty_name, new_status)
+        print("Duty status updated successfully.")
+
+    except ValueError as error:
+        print(f"Error: {error}")
+    except KeyError as error:
+        print(f"Error: {error}")
 
 
 def handle_view_soldier_duties() -> None:
@@ -353,7 +364,20 @@ def update_duty_status(soldier_id: int, duty_name: str, new_status: str) -> None
     מבצעת בדיקות ומעדכנת את הסטטוס.
     זורקת exceptions במקרה של שגיאה במקום להחזיר False.
     """
-    pass
+    soldier = find_soldier_by_id(soldier_id)
+
+    if soldier is None:
+        raise KeyError("soldier was not found")
+
+    duty = find_duty_by_name(soldier["duties"], duty_name)
+
+    if duty is None:
+        raise KeyError("duty was not found for this soldier")
+
+    if not is_valid_status(new_status):
+        raise ValueError("status must be pending, completed, or missed")
+
+    duty["status"] = new_status.strip().lower()
 
 
 def get_soldier_duties(soldier_id: int) -> list:
@@ -432,7 +456,13 @@ def find_duty_by_name(duties: list, duty_name: str) -> dict | None:
     הפרדה של לוגיקת החיפוש למקום אחד.
     מחזירה None במקום לזרוק exception - מאפשרת גמישות.
     """
-    pass
+    clean_duty_name = duty_name.strip().lower()
+
+    for duty in duties:
+        if duty["name"].strip().lower() == clean_duty_name:
+            return duty
+
+    return None
 
 
 def is_valid_status(status: str) -> bool:
@@ -456,7 +486,7 @@ def is_valid_status(status: str) -> bool:
     גם מקל על שינוי הסטטוסים החוקיים בעתיד.
     פונקציות validation מחזירות bool ולא זורקות exceptions.
     """
-    pass
+    return status.strip().lower() in VALID_STATUSES
 
 
 def is_valid_name(name: str) -> bool:
