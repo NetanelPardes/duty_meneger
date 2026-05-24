@@ -1,3 +1,4 @@
+
 """
 מערכת ניהול תורנויות חיילים
 """
@@ -37,7 +38,7 @@ soldiers = [
     }
 ]
 
-VALID_DAYS = ["sunday", "monday", "tuesday", "wednesday", "thursday"]
+VALID_DAYS = ["sunday", "monday", "tuesday", "wednesday", "thursday" , "Friday" , "Saturday"]
 VALID_STATUSES = ["pending", "completed", "missed"]
 
 # ============================================================================
@@ -246,7 +247,7 @@ def main() -> None:
         show_menu()
 
         choice = get_user_choice()
-        
+
         if choice == '0':
             print("goodbye")
 
