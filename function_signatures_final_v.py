@@ -2,7 +2,40 @@
 מערכת ניהול תורנויות חיילים
 """
 
-soldiers = []
+soldiers = [
+    {
+        "id": 101,
+        "name": "David",
+        "duties": [
+            {
+                "name": "Kitchen",
+                "day": "sunday",
+                "status": "pending"
+            },
+            {
+                "name": "Guard",
+                "day": "monday",
+                "status": "completed"
+            }
+        ]
+    },
+    {
+        "id": 102,
+        "name": "Moshe",
+        "duties": [
+            {
+                "name": "Cleaning",
+                "day": "tuesday",
+                "status": "pending"
+            }
+        ]
+    },
+    {
+        "id": 103,
+        "name": "Avi",
+        "duties": []
+    }
+]
 
 VALID_DAYS = ["sunday", "monday", "tuesday", "wednesday", "thursday"]
 VALID_STATUSES = ["pending", "completed", "missed"]
@@ -115,7 +148,7 @@ def handle_view_soldiers() -> None:
         return
 
     for soldier in soldiers:
-        print(soldier)
+        print(f"soldier: {soldier['id']} \nsoldier name: {soldier['name']} \nis duties: {soldier['duties']}\n")
 
 
 def handle_add_duty() -> None:
@@ -187,9 +220,8 @@ def handle_view_soldier_duties() -> None:
             print("This soldier has no duties.")
             return
 
-        print("\n=== Soldier Duties ===")
         for duty in duties:
-            print(f"Duty: {duty['name']} | Day: {duty['day']} | Status: {duty['status']}")
+            print(f"\nsoldier id: {soldier_id} \nduty name: {duty['name']} \nDay: {duty['day']} \nStatus: {duty['status']}\n")
 
     except ValueError:
         print("Error: soldier ID must be a number.")
@@ -208,7 +240,36 @@ def main() -> None:
     למה הפונקציה קיימת:
     נקודת הכניסה לתוכנית. מנהלת את הזרימה הראשית.
     """
-    pass
+    choice = ''
+
+    while choice != '0':
+        show_menu()
+
+        choice = get_user_choice()
+        
+        if choice == '0':
+            print("goodbye")
+
+        elif choice == '1':
+            handle_add_soldier()
+
+        elif choice == '2':
+            handle_remove_soldier()
+
+        elif choice == '3':
+            handle_view_soldiers()
+
+        elif choice == '4':
+            handle_add_duty()
+
+        elif choice == '5':
+            handle_update_duty_status()
+
+        elif choice == '6':
+            handle_view_soldier_duties()
+        
+        else:
+            print("Please try again")
 
 
 # ============================================================================
@@ -639,3 +700,6 @@ def is_valid_day(day: str) -> bool:
 - שמרנו על איזון בין מודולריות לפשטות
 
 """
+
+if __name__ == "__main__":
+    main()
