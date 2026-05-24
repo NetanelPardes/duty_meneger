@@ -38,7 +38,7 @@ soldiers = [
     }
 ]
 
-VALID_DAYS = ["sunday", "monday", "tuesday", "wednesday", "thursday" , "Friday" , "Saturday"]
+VALID_DAYS = ["sunday", "monday", "tuesday", "wednesday", "thursday" , "friday" , "saturday"]
 VALID_STATUSES = ["pending", "completed", "missed"]
 
 # ============================================================================
